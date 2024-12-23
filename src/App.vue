@@ -19,6 +19,7 @@ import createFloor from './helpers/createFloor'
 import createLights from './helpers/createLights'
 import createGuiController, { type ControllerObjType } from './helpers/createGuiController'
 import measureHandler from './helpers/measureHandler'
+import createGoemetry from './helpers/createGeometry'
 
 const threeDiv = ref<HTMLDivElement>()
 
@@ -41,13 +42,13 @@ scene.add(createFloor())
 scene.add(new GridHelper(30, 50))
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.update()
-
-const room = createRoom()
-scene.add(room)
+createGoemetry().forEach((mesh) => scene.add(mesh))
+// const room = createRoom()
+// scene.add(room)
 
 const door = createDoor()
 scene.add(door)
-createDoorHole(room, defualtDoorWidth, defualtDoorHeight)
+// createDoorHole(room, defualtDoorWidth, defualtDoorHeight)
 
 const stats = new Stats()
 const { gui, obj } = createGuiController()
@@ -86,7 +87,7 @@ gui.onChange((changeEvent) => {
   }
 
   changeDoorSize(door, doorWidth, doorHeight)
-  createDoorHole(room, doorWidth, doorHeight)
+  // createDoorHole(room, doorWidth, doorHeight)
 })
 
 function animate() {
