@@ -14,7 +14,7 @@ type Obj = {
 
 function measureHandler(scene: Scene, camera: Camera, gui: GUI): void {
   const fontLoader = new FontLoader()
-  fontLoader.load('/poppins.typeface.json', (f: Font) => {
+  fontLoader.load(`${'/test_room/'}/poppins.typeface.json`, (f: Font) => {
     font = f
   })
   const obj: Obj = {
