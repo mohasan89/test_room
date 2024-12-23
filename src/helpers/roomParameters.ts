@@ -5,7 +5,10 @@ const roomWidth = 4
 const defualtDoorWidth = 0.9
 const defualtDoorHeight = 2
 const doorDepth = wallDepth * 0.7
-
+const maxDoorHeight = 3.2
+const minDoorHeight = 1
+const minDoorWidth = 0.5
+const maxDoorWidth = 4
 export {
   roomHeight,
   wallDepth,
@@ -14,4 +17,8 @@ export {
   defualtDoorHeight,
   defualtDoorWidth,
   doorDepth,
+  maxDoorHeight,
+  minDoorHeight,
+  maxDoorWidth,
+  minDoorWidth,
 }

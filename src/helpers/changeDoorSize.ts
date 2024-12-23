@@ -13,6 +13,8 @@ function changeDoorSize(door: Mesh, width: number, height: number) {
 
   material.dispose()
   door.material = material2
+  door.userData.width = width
+  door.userData.height = height
 }
 
 export default changeDoorSize

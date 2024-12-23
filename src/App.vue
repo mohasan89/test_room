@@ -6,7 +6,14 @@ import createRoom from './helpers/createRoom'
 import createDoor from './helpers/createDoor'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import changeDoorSize from './helpers/changeDoorSize'
-import { defualtDoorHeight, defualtDoorWidth } from './helpers/roomParameters'
+import {
+  defualtDoorHeight,
+  defualtDoorWidth,
+  maxDoorHeight,
+  maxDoorWidth,
+  minDoorHeight,
+  minDoorWidth,
+} from './helpers/roomParameters'
 import createDoorHole from './helpers/createDoorHole'
 import createFloor from './helpers/createFloor'
 import createLights from './helpers/createLights'
@@ -40,12 +47,41 @@ scene.add(door)
 createDoorHole(room, defualtDoorWidth, defualtDoorHeight)
 
 const stats = new Stats()
-const { gui } = createGuiController()
+const { gui, obj } = createGuiController()
 gui.onChange((changeEvent) => {
-  if (!changeEvent?.object) return
-  const { width, height } = changeEvent.object as ControllerObjType
-  const doorWidth = width ?? defualtDoorWidth
-  const doorHeight = height ?? defualtDoorHeight
+  if (changeEvent.property === 'keepAspect') return
+
+  const { width, height, keepAspect } = changeEvent.object as ControllerObjType
+  let doorWidth = width ?? defualtDoorWidth
+  let doorHeight = height ?? defualtDoorHeight
+  if (keepAspect) {
+    if (changeEvent.property === 'width') {
+      doorHeight = (door.userData.height * doorWidth) / door.userData.width
+    } else {
+      doorWidth = (door.userData.width * doorHeight) / door.userData.height
+    }
+    if (doorHeight > maxDoorHeight) {
+      doorWidth = (doorWidth * maxDoorHeight) / doorHeight
+      doorHeight = maxDoorHeight
+    }
+    if (doorWidth > maxDoorWidth) {
+      doorHeight = (doorHeight * maxDoorWidth) / doorWidth
+      doorWidth = maxDoorWidth
+    }
+
+    if (doorHeight < minDoorHeight) {
+      doorWidth = (doorWidth * minDoorHeight) / doorHeight
+      doorHeight = minDoorHeight
+    }
+    if (doorWidth < minDoorWidth) {
+      doorHeight = (doorHeight * minDoorWidth) / doorWidth
+      doorWidth = minDoorWidth
+    }
+    obj.height = doorHeight
+    obj.width = doorWidth
+    gui.controllersRecursive().forEach((el) => el.updateDisplay())
+  }
+
   changeDoorSize(door, doorWidth, doorHeight)
   createDoorHole(room, doorWidth, doorHeight)
 })

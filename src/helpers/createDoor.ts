@@ -26,7 +26,8 @@ function createDoor(): Mesh {
   const mesh = new Mesh(geomertry, matrial)
   mesh.position.set(0, 1, roomWidth / 2)
   mesh.userData.isDoor = true
-
+  mesh.userData.width = defualtDoorWidth
+  mesh.userData.height = defualtDoorHeight
   return mesh
 }
 

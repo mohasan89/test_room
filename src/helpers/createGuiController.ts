@@ -1,19 +1,27 @@
-import { defualtDoorHeight, defualtDoorWidth } from './roomParameters'
+import {
+  defualtDoorHeight,
+  defualtDoorWidth,
+  maxDoorHeight,
+  maxDoorWidth,
+  minDoorHeight,
+  minDoorWidth,
+} from './roomParameters'
 import lilGui, { GUI } from 'three/examples/jsm/libs/lil-gui.module.min'
 
-export type ControllerObjType = { width: number; height: number }
+export type ControllerObjType = { width: number; height: number; keepAspect: boolean }
 
 function createGuiController(): { obj: ControllerObjType; gui: GUI } {
   const gui = new lilGui()
   const obj = {
     width: defualtDoorWidth,
     height: defualtDoorHeight,
-    measure: false,
+    keepAspect: true,
   }
   gui.$title.innerText = 'Контроллер'
 
-  gui.add(obj, 'width', 0.5, 4, 0.2)
-  gui.add(obj, 'height', 1, 3.2, 0.2)
+  gui.add(obj, 'width', minDoorWidth, maxDoorWidth, 0.2)
+  gui.add(obj, 'height', minDoorHeight, maxDoorHeight, 0.2)
+  gui.add(obj, 'keepAspect')
   return { gui, obj }
 }
 
