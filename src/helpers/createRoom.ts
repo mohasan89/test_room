@@ -10,20 +10,28 @@ function createRoom(): Group {
   const longWallGeometry = new BoxGeometry(roomLength, roomHeight, wallDepth)
   const longWallMesh = new Mesh(longWallGeometry, matrial)
   longWallMesh.userData.isDoorWall = true
+  longWallMesh.castShadow = true
+  longWallMesh.receiveShadow = true
   group.add(longWallMesh)
 
   const longWall2 = longWallMesh.clone()
   longWall2.position.set(0, 0, -roomWidth)
+  longWall2.castShadow = true
+  longWall2.receiveShadow = true
   group.add(longWall2)
 
   const shortWallGeometry = new BoxGeometry(roomWidth - wallDepth, roomHeight, wallDepth)
   const shortWallMesh = new Mesh(shortWallGeometry, matrial)
   shortWallMesh.position.set(roomLength / 2 - wallDepth / 2, 0, -roomWidth / 2)
   shortWallMesh.rotateY(Math.PI / 2)
+  shortWallMesh.castShadow = true
+  shortWallMesh.receiveShadow = true
   group.add(shortWallMesh)
 
   const shortWallMesh2 = shortWallMesh.clone()
   shortWallMesh2.position.set(-roomLength / 2 + wallDepth / 2, 0, -roomWidth / 2)
+  shortWallMesh2.castShadow = true
+  shortWallMesh2.receiveShadow = true
   group.add(shortWallMesh2)
 
   group.position.set(0, roomHeight / 2, roomWidth / 2)

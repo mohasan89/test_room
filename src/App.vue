@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GridHelper, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
+import { CameraHelper, GridHelper, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
 import { onMounted, ref } from 'vue'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
 import createRoom from './helpers/createRoom'
@@ -31,8 +31,11 @@ scene.add(camera)
 const renderer = new WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setPixelRatio(window.devicePixelRatio)
+renderer.shadowMap.enabled = true
 
-createLights().forEach((light) => scene.add(light))
+createLights().forEach((light) => {
+  scene.add(light)
+})
 
 scene.add(createFloor())
 scene.add(new GridHelper(30, 50))

@@ -24,10 +24,13 @@ function createDoor(): Mesh {
     bumpScale: 1,
   })
   const mesh = new Mesh(geomertry, matrial)
+  mesh.castShadow = true
+  mesh.receiveShadow = true
   mesh.position.set(0, 1, roomWidth / 2)
   mesh.userData.isDoor = true
   mesh.userData.width = defualtDoorWidth
   mesh.userData.height = defualtDoorHeight
+
   return mesh
 }
 
